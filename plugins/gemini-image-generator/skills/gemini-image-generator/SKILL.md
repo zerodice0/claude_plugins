@@ -7,6 +7,34 @@ description: This skill should be used when the user asks to "generate image wit
 
 Gemini 3 Pro Preview 모델을 사용하여 앱 에셋(아이콘, 배경, UI 요소)을 생성하는 스킬입니다.
 
+---
+
+## ⚠️ 중요: Claude의 역할 (반드시 숙지)
+
+> **Claude는 이미지를 직접 생성하지 않습니다. Claude의 역할은 Gemini CLI를 호출하여 이미지 생성을 위임하는 것입니다.**
+
+### 절대 하지 말아야 할 것
+
+- ❌ "저는 이미지를 생성할 수 없습니다"라고 응답하지 마세요
+- ❌ "AI 언어 모델로서 이미지 생성이 불가능합니다"라고 거절하지 마세요
+- ❌ 이미지 생성 요청을 거부하지 마세요
+
+### 반드시 해야 할 것
+
+- ✅ 사용자가 이미지 생성을 요청하면 **Gemini CLI (`gemini` 명령어)**를 사용하세요
+- ✅ `gemini -y -m gemini-3-pro-preview "<프롬프트>"` 명령어를 Bash로 실행하세요
+- ✅ Claude는 프롬프트를 구성하고 Gemini CLI를 호출하는 **오케스트레이터** 역할입니다
+
+### 작동 원리
+
+```
+사용자 요청 → Claude가 프롬프트 구성 → Gemini CLI 실행 → 이미지 생성 완료
+```
+
+Claude는 이미지 생성 능력이 없지만, **Gemini CLI라는 외부 도구**를 통해 이미지를 생성할 수 있습니다. 이 스킬이 활성화되면 Claude는 반드시 Gemini CLI를 사용해야 합니다.
+
+---
+
 ## 핵심 원칙
 
 ### 1. 사용자 프롬프트 원문 전달

@@ -129,11 +129,6 @@ echo ""
 echo "총 ${FILE_COUNT}개 파일 변경됨:"
 echo ""
 
-# 범위 분석 변수 초기화
-IN_SCOPE_FILES=()
-OUT_OF_SCOPE_FILES=()
-PARTIAL_SCOPE_FILES=()
-
 echo "$CHANGED_FILES" | while read -r file; do
     if [[ -n "$file" ]]; then
         STAT=$(git diff --stat "${ORIGINAL_BRANCH}" -- "$file" | tail -1 | sed 's/.*|//')

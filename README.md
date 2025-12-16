@@ -1,4 +1,4 @@
-# zerodice0-plugins
+# claude_plugins
 
 > zerodice0's Claude Code plugin collection
 
@@ -20,10 +20,10 @@ A collection of Claude Code plugins developed by zerodice0.
 
 ```bash
 # Add marketplace
-/plugin marketplace add https://github.com/zerodice0/zerodice0_claude_plugins.git
+/plugin marketplace add zerodice0/claude_plugins
 
 # Install plugin
-/plugin install gemini-design-updater@zerodice0_claude_plugins
+/plugin install gemini-design-updater@claude_plugins
 ```
 
 ### Requirements
@@ -52,10 +52,10 @@ zerodice0가 개발한 Claude Code 플러그인 모음입니다.
 
 ```bash
 # Marketplace 추가
-/plugin marketplace add https://github.com/zerodice0/zerodice0_claude_plugins.git
+/plugin marketplace add zerodice0/claude_plugins
 
 # 플러그인 설치
-/plugin install gemini-design-updater@zerodice0_claude_plugins
+/plugin install gemini-design-updater@claude_plugins
 ```
 
 ### 요구사항

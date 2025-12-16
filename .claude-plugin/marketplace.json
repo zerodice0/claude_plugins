@@ -1,17 +1,31 @@
 {
-  "name": "zerodice0-plugins",
+  "name": "claude_plugins",
   "version": "1.0.0",
   "description": "zerodice0's Claude Code plugin collection - Gemini integration tools and more",
+  "owner": {
+    "name": "zerodice0",
+    "url": "https://github.com/zerodice0"
+  },
   "author": {
     "name": "zerodice0"
   },
-  "homepage": "https://github.com/zerodice0/zerodice0-plugins",
+  "homepage": "https://github.com/zerodice0/claude_plugins",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zerodice0/zerodice0-plugins"
+    "url": "https://github.com/zerodice0/claude_plugins"
   },
   "license": "MIT",
   "plugins": [
-    "plugins/gemini-design-updater"
+    {
+      "name": "gemini-design-updater",
+      "source": "./plugins/gemini-design-updater",
+      "description": "Safe design update workflow using Gemini Pro with Claude review",
+      "version": "1.0.0",
+      "author": {
+        "name": "zerodice0"
+      },
+      "category": "design",
+      "tags": ["gemini", "design", "ai"]
+    }
   ]
 }

@@ -1,0 +1,62 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './plugins/gemini-design-updater/scripts'
+          severity: warning
+        env:
+          SHELLCHECK_OPTS: -e SC1091 -e SC2086
+
+  validate-structure:
+    name: Validate Plugin Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate marketplace.json
+        run: |
+          echo "Validating marketplace.json..."
+          test -f .claude-plugin/marketplace.json
+          cat .claude-plugin/marketplace.json | python3 -m json.tool > /dev/null
+          echo "✓ marketplace.json is valid JSON"
+
+      - name: Validate plugin.json
+        run: |
+          echo "Validating plugin.json..."
+          test -f plugins/gemini-design-updater/.claude-plugin/plugin.json
+          cat plugins/gemini-design-updater/.claude-plugin/plugin.json | python3 -m json.tool > /dev/null
+          echo "✓ plugin.json is valid JSON"
+
+      - name: Validate SKILL.md exists
+        run: |
+          echo "Validating SKILL.md..."
+          test -f plugins/gemini-design-updater/skills/gemini-design-updater/SKILL.md
+          echo "✓ SKILL.md exists"
+
+      - name: Validate scripts are executable
+        run: |
+          echo "Validating scripts..."
+          for script in plugins/gemini-design-updater/scripts/*.sh; do
+            if [ -f "$script" ]; then
+              head -1 "$script" | grep -q "^#!/" || echo "Warning: $script missing shebang"
+              echo "✓ $script exists"
+            fi
+          done

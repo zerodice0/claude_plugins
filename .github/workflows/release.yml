@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate plugin structure
+        run: |
+          echo "Validating release structure..."
+          test -f .claude-plugin/marketplace.json
+          test -f plugins/gemini-design-updater/.claude-plugin/plugin.json
+          test -f plugins/gemini-design-updater/skills/gemini-design-updater/SKILL.md
+          echo "✓ All required files present"
+
+      - name: Extract version from tag
+        id: version
+        env:
+          GH_REF: ${{ github.ref }}
+        run: echo "VERSION=${GH_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Validate version consistency
+        env:
+          TAG_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          PLUGIN_VERSION=$(cat plugins/gemini-design-updater/.claude-plugin/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['version'])")
+
+          if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: plugin.json version ($PLUGIN_VERSION) doesn't match tag version ($TAG_VERSION)"
+            exit 1
+          fi
+          echo "✓ Version $TAG_VERSION is consistent"
+
+      - name: Generate release notes
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          echo "## What's Changed" > release_notes.md
+          echo "" >> release_notes.md
+
+          # Extract changelog for this version if CHANGELOG.md exists
+          if [ -f CHANGELOG.md ]; then
+            # Try to extract section for this version
+            sed -n "/## \[$VERSION\]/,/## \[/p" CHANGELOG.md | head -n -1 >> release_notes.md || true
+          fi
+
+          echo "" >> release_notes.md
+          echo "## Installation" >> release_notes.md
+          echo "" >> release_notes.md
+          echo '```bash' >> release_notes.md
+          echo "# Add marketplace" >> release_notes.md
+          echo "/plugin marketplace add zerodice0/zerodice0-plugins" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "# Install plugin" >> release_notes.md
+          echo "/plugin install gemini-design-updater@zerodice0-plugins" >> release_notes.md
+          echo '```' >> release_notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: release_notes.md
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

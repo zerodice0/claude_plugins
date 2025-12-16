@@ -1,5 +1,5 @@
 {
-  "name": "claude_plugins",
+  "name": "zerodice0-plugins",
   "version": "1.0.0",
   "description": "zerodice0's Claude Code plugin collection - Gemini integration tools and more",
   "owner": {
@@ -9,10 +9,10 @@
   "author": {
     "name": "zerodice0"
   },
-  "homepage": "https://github.com/zerodice0/claude_plugins",
+  "homepage": "https://github.com/zerodice0/zerodice0-plugins",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zerodice0/claude_plugins"
+    "url": "https://github.com/zerodice0/zerodice0-plugins"
   },
   "license": "MIT",
   "plugins": [

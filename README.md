@@ -15,6 +15,7 @@ A collection of Claude Code plugins developed by zerodice0.
 | Plugin | Description |
 |--------|-------------|
 | [gemini-design-updater](./plugins/gemini-design-updater/) | Safe design update workflow using Gemini Pro with Claude review |
+| [gemini-image-generator](./plugins/gemini-image-generator/) | Generate app assets (icons, backgrounds, UI elements) using Gemini 3 Pro |
 
 ### Installation
 
@@ -47,6 +48,7 @@ zerodice0가 개발한 Claude Code 플러그인 모음입니다.
 | 플러그인 | 설명 |
 |----------|------|
 | [gemini-design-updater](./plugins/gemini-design-updater/) | Gemini Pro를 활용한 안전한 디자인 업데이트 워크플로우 |
+| [gemini-image-generator](./plugins/gemini-image-generator/) | Gemini 3 Pro를 활용한 앱 에셋(아이콘, 배경, UI 요소) 생성 |
 
 ### 설치 방법
 
@@ -67,6 +69,16 @@ zerodice0가 개발한 Claude Code 플러그인 모음입니다.
 ### 라이선스
 
 MIT 라이선스 - 자세한 내용은 [LICENSE](./LICENSE)를 참조하세요.
+
+---
+
+## Changelog
+
+### 2026-01-04
+
+- **[CLA-17]** Added short-form trigger keywords to gemini-design-updater skill
+  - Added: "gemini-design", "gemini-design 스킬", "gemini-design skill", "gemini-design 사용", "use gemini-design"
+  - Issue: Skill was not triggered when using short-form keywords like "gemini-design"
 
 ---
 
